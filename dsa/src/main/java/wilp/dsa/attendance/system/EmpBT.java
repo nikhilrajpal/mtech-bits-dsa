@@ -12,7 +12,22 @@ public class EmpBT implements IAttendanceSystemTree {
      * @param employeeId employee id.
      */
     public EmployeeNode readEmployee(EmployeeNode root, Integer employeeId) {
-        return null;
+        if (root == null) {
+            return new EmployeeNode(employeeId);
+        }
+
+        if (employeeId < root.getEmpId()) {
+            readEmployee(root, employeeId);
+            // insert in left subtree.
+            root.setLeft(readEmployee(root, employeeId));
+        } else if (employeeId > root.getEmpId()) {
+            // insert in right subtree.
+            root.setRight(readEmployee(root, employeeId));
+        } else {
+            // root employeeid = employeeid
+            root.incrementAttendanceCount();
+        }
+        return root;
     }
 
     /**
@@ -22,7 +37,10 @@ public class EmpBT implements IAttendanceSystemTree {
      * @return size of the tree.
      */
     public Integer getHeadCount(EmployeeNode root) {
-        return null;
+        if (root == null) {
+            return 0;
+        }
+        return 1 + getHeadCount(root.getLeft()) + getHeadCount(root.getRight());
     }
 
     /**
@@ -33,6 +51,19 @@ public class EmpBT implements IAttendanceSystemTree {
      * @return True if employeeId exists in tree, else False.
      */
     public Boolean searchId(EmployeeNode root, Integer employeeId) {
+        return searchInternal(root, employeeId) != null;
+    }
+
+    private EmployeeNode searchInternal(EmployeeNode root, Integer employeeId) {
+        if (root != null) {
+            if (root.getEmpId().equals(employeeId)) {
+                return root;
+            } else if (root.getLeft() != null && root.getLeft().getEmpId() < employeeId) {
+                return searchInternal(root.getLeft(), employeeId);
+            } else if (root.getRight() != null && root.getRight().getEmpId() < employeeId) {
+                return searchInternal(root.getRight(), employeeId);
+            }
+        }
         return null;
     }
 

@@ -36,6 +36,10 @@ public class EmployeeNode {
         this.attCount = START_COUNT_FOR_ATTENDANCE;
     }
 
+    public void incrementAttendanceCount() {
+        attCount++;
+    }
+
     public Integer getEmpId() {
         return empId;
     }
@@ -67,4 +71,5 @@ public class EmployeeNode {
     public void setRight(EmployeeNode right) {
         this.right = right;
     }
+
 }
