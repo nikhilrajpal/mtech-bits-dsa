@@ -32,10 +32,14 @@ public class EmployeeAttendance {
         MenuScreen menuScreen = new MenuScreen();
         menuScreen.getMenuScreen();
         EmployeeNode root = null;
-        while (scanner.hasNext()) {
-            String menuOption = scanner.nextLine();
-            Integer menuOptionId = Integer.parseInt(menuOption);
-            MenuOption option = MenuOption.getMenuOptionById(menuOptionId);
+        MenuOption option = null;
+        do {
+            option = readInput(scanner);
+            if (option == null) {
+                System.out.println("Invalid input received, please try again");
+                continue;
+            }
+
             switch (option) {
                 case LOAD_INPUT_FILE:
                     System.out.println("Enter the file path to load input.txt");
@@ -67,7 +71,22 @@ public class EmployeeAttendance {
                 case PRINT_EMPLOYEE_RANGE:
                     System.out.println("Frequent Visitor : " + attendanceSystemTree.frequentVisitor(root));
                     break;
+                default:
+                    System.out.println("Invalid input, please try again.");
             }
+        } while (option == null || !option.equals(MenuOption.QUIT));
+        System.out.println("Existing the program, thanks !!");
+    }
+
+    private MenuOption readInput(Scanner scanner) {
+        try {
+            MenuOption option;
+            String menuOption = scanner.nextLine();
+            Integer menuOptionId = Integer.parseInt(menuOption);
+            option = MenuOption.getMenuOptionById(menuOptionId);
+            return option;
+        } catch (Throwable e) {
+            return null;
         }
     }
 
@@ -105,7 +124,8 @@ enum MenuOption {
     SEARCH_EMPLOYEE("Search for a given employee with employee id.", 3),
     HOW_OFTEN_EMPLOYEE("To know the number of times the employee entered the organization", 4),
     FREQUENT_VISITOR_EMPLOYEE("To know the frequent visitor employee", 5),
-    PRINT_EMPLOYEE_RANGE("To print the ids in the range id1 to id2 and how often they have entered the organization", 6);
+    PRINT_EMPLOYEE_RANGE("To print the ids in the range id1 to id2 and how often they have entered the organization", 6),
+    QUIT("Exit the program. ", 7);
 
     private String description;
     private Integer menuOptionId;
