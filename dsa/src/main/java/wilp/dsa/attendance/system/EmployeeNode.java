@@ -1,4 +1,4 @@
-package main.java.wilp.dsa.attendance.system;
+package wilp.dsa.attendance.system;
 
 /**
  * Class to describes the node in attendance system tree.

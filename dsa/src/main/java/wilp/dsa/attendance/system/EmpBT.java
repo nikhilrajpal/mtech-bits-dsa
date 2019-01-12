@@ -1,4 +1,4 @@
-package main.java.wilp.dsa.attendance.system;
+package wilp.dsa.attendance.system;
 
 /**
  * Created by nikhilrajpal on 1/12/19.
@@ -11,8 +11,8 @@ public class EmpBT implements IAttendanceSystemTree {
      * @param root       root of the attendance system tree.
      * @param employeeId employee id.
      */
-    public void readEmployee(EmployeeNode root, Integer employeeId) {
-
+    public EmployeeNode readEmployee(EmployeeNode root, Integer employeeId) {
+        return null;
     }
 
     /**

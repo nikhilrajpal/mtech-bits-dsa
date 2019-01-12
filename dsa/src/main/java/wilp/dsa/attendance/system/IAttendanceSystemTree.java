@@ -1,4 +1,4 @@
-package main.java.wilp.dsa.attendance.system;
+package wilp.dsa.attendance.system;
 
 /**
  * Created by nikhilrajpal on 1/12/19.
@@ -10,8 +10,9 @@ public interface IAttendanceSystemTree {
      *
      * @param root       root of the attendance system tree.
      * @param employeeId employee id.
+     * @return root of the attendance system tree.
      */
-    void readEmployee(EmployeeNode root, Integer employeeId);
+    EmployeeNode readEmployee(EmployeeNode root, Integer employeeId);
 
     /**
      * Get the total employees registered in attendance system tree.
