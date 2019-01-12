@@ -37,42 +37,50 @@ public class EmployeeAttendance {
             option = readInput(scanner);
             if (option == null) {
                 System.out.println("Invalid input received, please try again");
+                menuScreen.getMenuScreen();
                 continue;
             }
 
-            switch (option) {
-                case LOAD_INPUT_FILE:
-                    System.out.println("Enter the file path to load input.txt");
-                    String filePath = scanner.nextLine();
-                    if (Files.exists(Paths.get(filePath))) {
-                        try {
-                            root = createTree(Paths.get(filePath));
-                        } catch (IOException e) {
-                            System.out.println("No such file exists on the path : " + filePath);
+            try {
+                switch (option) {
+                    case LOAD_INPUT_FILE:
+                        System.out.println("Enter the file path to load input.txt");
+                        while (true) {
+                            String filePath = scanner.nextLine();
+                            if (Files.exists(Paths.get(filePath))) {
+                                try {
+                                    root = createTree(Paths.get(filePath));
+                                    break;
+                                } catch (IOException e) {
+                                    System.out.println("No such file exists on the path, please re-enter the file path to load input.txt" + filePath);
+                                }
+                            } else {
+                                System.out.println("No such file exists on the path, please re-enter the file path to load input.txt" + filePath);
+                            }
                         }
-                    } else {
-                        System.out.println("No such file exists on the path : " + filePath);
-                    }
-                    break;
-                case GET_HEAD_COUNT:
-                    System.out.println("Total employees seen :" + attendanceSystemTree.getHeadCount(root));
-                    break;
-                case SEARCH_EMPLOYEE:
-                    System.out.println("Enter the employee id to search ..");
-                    System.out.println("Employee found : " + attendanceSystemTree.searchId(root, scanner.nextInt()));
-                    break;
-                case HOW_OFTEN_EMPLOYEE:
-                    System.out.println("Enter the employee id to check ..");
-                    System.out.println(attendanceSystemTree.howOften(root, scanner.nextInt()));
-                    break;
-                case FREQUENT_VISITOR_EMPLOYEE:
-                    System.out.println("Frequent Visitor : " + attendanceSystemTree.frequentVisitor(root));
-                    break;
-                case PRINT_EMPLOYEE_RANGE:
-                    System.out.println("Frequent Visitor : " + attendanceSystemTree.frequentVisitor(root));
-                    break;
-                default:
-                    System.out.println("Invalid input, please try again.");
+                        break;
+                    case GET_HEAD_COUNT:
+                        System.out.println("Total employees seen :" + attendanceSystemTree.getHeadCount(root));
+                        break;
+                    case SEARCH_EMPLOYEE:
+                        System.out.println("Enter the employee id to search ..");
+                        System.out.println("Employee found : " + attendanceSystemTree.searchId(root, Integer.parseInt(scanner.nextLine())));
+                        break;
+                    case HOW_OFTEN_EMPLOYEE:
+                        System.out.println("Enter the employee id to check ..");
+                        System.out.println(attendanceSystemTree.howOften(root, Integer.parseInt(scanner.nextLine())));
+                        break;
+                    case FREQUENT_VISITOR_EMPLOYEE:
+                        System.out.println("Frequent Visitor : " + attendanceSystemTree.frequentVisitor(root));
+                        break;
+                    case PRINT_EMPLOYEE_RANGE:
+                        System.out.println("Frequent Visitor : " + attendanceSystemTree.frequentVisitor(root));
+                        break;
+                    default:
+                        System.out.println("Invalid input, please try again.");
+                }
+            } catch (Throwable e) {
+                System.out.println("Error while processing option :" + option + ", please re-enter your input.");
             }
             menuScreen.promptUser(option);
         } while (option == null || !option.equals(MenuOption.QUIT));
@@ -121,7 +129,7 @@ class MenuScreen {
 
     public void promptUser(MenuOption menuOption) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Command " + menuOption + " processed, please choose next option from main menu : ").append("\n");
+        stringBuilder.append("Command " + menuOption + " processed, please choose next option from main menu : ");
         System.out.println(stringBuilder.toString());
     }
 }
