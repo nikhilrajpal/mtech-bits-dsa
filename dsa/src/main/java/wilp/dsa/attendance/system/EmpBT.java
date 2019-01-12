@@ -17,12 +17,11 @@ public class EmpBT implements IAttendanceSystemTree {
         }
 
         if (employeeId < root.getEmpId()) {
-            readEmployee(root, employeeId);
             // insert in left subtree.
-            root.setLeft(readEmployee(root, employeeId));
+            root.setLeft(readEmployee(root.getLeft(), employeeId));
         } else if (employeeId > root.getEmpId()) {
             // insert in right subtree.
-            root.setRight(readEmployee(root, employeeId));
+            root.setRight(readEmployee(root.getRight(), employeeId));
         } else {
             // root employeeid = employeeid
             root.incrementAttendanceCount();
@@ -60,7 +59,7 @@ public class EmpBT implements IAttendanceSystemTree {
                 return root;
             } else if (root.getLeft() != null && root.getLeft().getEmpId() < employeeId) {
                 return searchInternal(root.getLeft(), employeeId);
-            } else if (root.getRight() != null && root.getRight().getEmpId() < employeeId) {
+            } else if (root.getRight() != null && root.getRight().getEmpId() >= employeeId) {
                 return searchInternal(root.getRight(), employeeId);
             }
         }

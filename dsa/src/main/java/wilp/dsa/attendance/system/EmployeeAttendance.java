@@ -30,9 +30,9 @@ public class EmployeeAttendance {
     public void startAttendanceSystem() {
         Scanner scanner = new Scanner(System.in);
         MenuScreen menuScreen = new MenuScreen();
-        menuScreen.getMenuScreen();
         EmployeeNode root = null;
         MenuOption option = null;
+        menuScreen.getMenuScreen();
         do {
             option = readInput(scanner);
             if (option == null) {
@@ -44,7 +44,7 @@ public class EmployeeAttendance {
                 case LOAD_INPUT_FILE:
                     System.out.println("Enter the file path to load input.txt");
                     String filePath = scanner.nextLine();
-                    if (!Files.exists(Paths.get(filePath))) {
+                    if (Files.exists(Paths.get(filePath))) {
                         try {
                             root = createTree(Paths.get(filePath));
                         } catch (IOException e) {
@@ -55,11 +55,11 @@ public class EmployeeAttendance {
                     }
                     break;
                 case GET_HEAD_COUNT:
-                    System.out.println(attendanceSystemTree.getHeadCount(root));
+                    System.out.println("Total employees seen :" + attendanceSystemTree.getHeadCount(root));
                     break;
                 case SEARCH_EMPLOYEE:
                     System.out.println("Enter the employee id to search ..");
-                    System.out.println(attendanceSystemTree.searchId(root, scanner.nextInt()));
+                    System.out.println("Employee found : " + attendanceSystemTree.searchId(root, scanner.nextInt()));
                     break;
                 case HOW_OFTEN_EMPLOYEE:
                     System.out.println("Enter the employee id to check ..");
@@ -74,6 +74,7 @@ public class EmployeeAttendance {
                 default:
                     System.out.println("Invalid input, please try again.");
             }
+            menuScreen.promptUser(option);
         } while (option == null || !option.equals(MenuOption.QUIT));
         System.out.println("Existing the program, thanks !!");
     }
@@ -96,6 +97,7 @@ public class EmployeeAttendance {
         for (String inputLine : inputLines) {
             root = attendanceSystemTree.readEmployee(root, Integer.parseInt(inputLine.trim()));
         }
+        System.out.println("Tree created with input file input.txt, total employees seen :" + attendanceSystemTree.getHeadCount(root));
         return root;
     }
 }
@@ -114,6 +116,12 @@ class MenuScreen {
         for (MenuOption option : menuOptionList) {
             stringBuilder.append(option.getMenuOptionId() + " : " + option.name() + "(" + option.getDescription() + ")").append("\n");
         }
+        System.out.println(stringBuilder.toString());
+    }
+
+    public void promptUser(MenuOption menuOption) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Command " + menuOption + " processed, please choose next option from main menu : ").append("\n");
         System.out.println(stringBuilder.toString());
     }
 }
