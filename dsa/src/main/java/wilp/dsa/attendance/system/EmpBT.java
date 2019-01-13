@@ -1,5 +1,11 @@
 package wilp.dsa.attendance.system;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by nikhilrajpal on 1/12/19.
  */
@@ -74,7 +80,18 @@ public class EmpBT implements IAttendanceSystemTree {
      * @return Count represeting number of times mployee with given employeeId entered the organization.
      */
     public Integer howOften(EmployeeNode root, Integer employeeId) {
-        return null;
+        if(root == null){
+            return null;
+        }
+
+        if(employeeId == root.getEmpId()){
+            int isEven = root.getAttCount()%2;
+            return (isEven == 0)?(root.getAttCount()/2):((root.getAttCount()/2)+1) ;
+        } else if (employeeId < root.getEmpId()){
+            return howOften(root.getLeft(), employeeId);
+        } else {
+            return howOften(root.getRight(), employeeId);
+        }
     }
 
     /**
@@ -84,7 +101,18 @@ public class EmpBT implements IAttendanceSystemTree {
      * @return most frequent visitor EmployeeNode
      */
     public EmployeeNode frequentVisitor(EmployeeNode root) {
-        return null;
+        if (root == null)
+            return null;
+
+        EmployeeNode maxNode = root;
+        EmployeeNode maxNodeLeft = frequentVisitor(root.getLeft());
+        EmployeeNode maxNodeRight = frequentVisitor(root.getRight());
+
+        if ((maxNodeLeft != null) && (maxNodeLeft.getAttCount() > root.getAttCount()))
+            maxNode = maxNodeLeft;
+        if ((maxNodeRight != null) && (maxNodeRight.getAttCount() > root.getAttCount()))
+            maxNode = maxNodeRight;
+        return maxNode;
     }
 
     /**
@@ -96,5 +124,57 @@ public class EmpBT implements IAttendanceSystemTree {
      */
     public void printRangePresent(EmployeeNode root, int id1, int id2) {
 
+        List<EmployeeNode> employeesInRange = new ArrayList<>();
+        employeesInRange = getEmployeesInRange(root, employeesInRange, id1, id2);
+
+        // Build file text
+        StringBuilder strBuilder = new StringBuilder();
+        for (EmployeeNode employee:employeesInRange) {
+            strBuilder.append(employee.getEmpId() + ", " + employee.getAttCount() + "\n");
+        }
+
+        // Write file
+        try{
+            String fileContents = strBuilder.toString();
+            System.out.println("Employees in range:\n" + fileContents);
+            Files.write(Paths.get("output.txt"), fileContents.getBytes());
+        } catch (IOException ioException) {
+            System.out.println("Exception occurred while writing file : " +  ioException.toString());
+        }
+
+
+    }
+
+    /**
+     * This function returns a list of employee nodes which lie within the specified range.
+     *
+     * @param root root of the attendance system tree.
+     * @param employeesInRange list of employee nodes used for recursive calls
+     * @param id1 start id of the given range.
+     * @param id2 end id of the given range.
+     * @return list of employee nodes which lie within the range
+     */
+    private List<EmployeeNode> getEmployeesInRange(EmployeeNode root, List<EmployeeNode> employeesInRange, int id1, int id2) {
+
+        // base case
+        if (root == null) {
+            return employeesInRange;
+        }
+
+        // Traverse left sub-tree first
+        if (id1 < root.getEmpId()) {
+            getEmployeesInRange(root.getLeft(), employeesInRange, id1, id2);
+        }
+
+        if (id1 <= root.getEmpId() && id2 >= root.getEmpId()) {
+            employeesInRange.add(root);
+        }
+
+        // Traverse right sub-tree
+        if (id2 > root.getEmpId()) {
+            getEmployeesInRange(root.getRight(), employeesInRange, id1, id2);
+        }
+
+        return employeesInRange;
     }
 }

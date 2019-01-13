@@ -71,10 +71,18 @@ public class EmployeeAttendance {
                         System.out.println(attendanceSystemTree.howOften(root, Integer.parseInt(scanner.nextLine())));
                         break;
                     case FREQUENT_VISITOR_EMPLOYEE:
-                        System.out.println("Frequent Visitor : " + attendanceSystemTree.frequentVisitor(root));
+                        EmployeeNode frequentVisitor = attendanceSystemTree.frequentVisitor(root);
+                        System.out.println("Frequent Visitor : " + frequentVisitor.getEmpId() +
+                                " with visit count : " + frequentVisitor.getAttCount());
                         break;
                     case PRINT_EMPLOYEE_RANGE:
-                        System.out.println("Frequent Visitor : " + attendanceSystemTree.frequentVisitor(root));
+                        System.out.println("Enter the employee id start range ID ..");
+                        int startRange = Integer.parseInt(scanner.nextLine());
+                        System.out.println("Enter the employee id end range ID ..");
+                        int endRange = Integer.parseInt(scanner.nextLine());
+
+                        attendanceSystemTree.printRangePresent(root,startRange, endRange);
+                        System.out.println("Output file 'output.txt' created. ");
                         break;
                     default:
                         System.out.println("Invalid input, please try again.");
