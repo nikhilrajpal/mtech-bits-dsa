@@ -68,7 +68,7 @@ public class EmployeeAttendance {
                         break;
                     case HOW_OFTEN_EMPLOYEE:
                         System.out.println("Enter the employee id to check ..");
-                        System.out.println(attendanceSystemTree.howOften(root, Integer.parseInt(scanner.nextLine())));
+                        System.out.println("Employee entered in organization number of times : " + attendanceSystemTree.howOften(root, Integer.parseInt(scanner.nextLine())));
                         break;
                     case FREQUENT_VISITOR_EMPLOYEE:
                         EmployeeNode frequentVisitor = attendanceSystemTree.frequentVisitor(root);
@@ -81,7 +81,7 @@ public class EmployeeAttendance {
                         System.out.println("Enter the employee id end range ID ..");
                         int endRange = Integer.parseInt(scanner.nextLine());
 
-                        attendanceSystemTree.printRangePresent(root,startRange, endRange);
+                        attendanceSystemTree.printRangePresent(root, startRange, endRange);
                         System.out.println("Output file 'output.txt' created. ");
                         break;
                     default:
