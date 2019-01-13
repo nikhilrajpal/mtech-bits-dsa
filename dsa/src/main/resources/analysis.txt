@@ -1,0 +1,25 @@
+Time Complexity Analysis of Assignment PS1_AttendanceProblem-1:
+
+We have implemented the problem using Binary Search Tree, Below is the Time Comlexity Analysis for each Function :
+
+Q1. How Many employees came today?
+Ans:For this question we have to traverse all the nodes to count therefore time complexity will become O(N).
+
+Q2. Did a particular employee come today?
+Ans:In this case we have to search an employee id in the tree therefore two scenarios can be possible.
+       a. When Tree is not balanced then searching may take the worst case time complexity i.e. O(N)
+       b. When Tree is balanced then search will take the average case time complexit i.e. O(Log N)
+
+Q3. How often an employee enter into the office?
+Ans:In this case we have to search the node to find it's attendance count, therefore time complexity will be similar to
+    searching the node in the Binary Treee, i.e. O(N) in worst case and O(Log N) for average case. Usually Binary Tree
+    seaching takes the average case complexity i.e. O(Log N).
+
+Q4. Which Emoloyee moves out of office most number of times?
+Ans:In this scenario we have to traverse every node to check its attendance count and find out the out of office move count
+    therefore time complexity will be O(N).
+
+Q5 Who all came within a range of IDs and How often they entered?
+Ans:In this scenario we have to search all the nodes that falls within the range of IDs therefore it has to make search for
+    each ID in the range. This is an augmented search algorithm where we collect all the nodes which falls within given input range.
+    In worst case we we will traverse all the nodes which falls in the given input range. Thus complexity for this algorithm is O(N).
