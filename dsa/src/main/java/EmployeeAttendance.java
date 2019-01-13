@@ -1,5 +1,3 @@
-package wilp.dsa.attendance.system;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -12,7 +10,6 @@ import java.util.Scanner;
 /**
  * Main menu class to recieve inputs of attendance system.
  * <p>
- * Created by nikhilrajpal on 1/12/19.
  */
 public class EmployeeAttendance {
 

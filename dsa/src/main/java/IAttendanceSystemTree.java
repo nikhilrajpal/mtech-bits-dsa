@@ -1,7 +1,4 @@
-package wilp.dsa.attendance.system;
-
 /**
- * Created by nikhilrajpal on 1/12/19.
  */
 public interface IAttendanceSystemTree {
 

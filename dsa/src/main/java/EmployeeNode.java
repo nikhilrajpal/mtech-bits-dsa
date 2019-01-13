@@ -1,8 +1,5 @@
-package wilp.dsa.attendance.system;
-
 /**
  * Class to describes the node in attendance system tree.
- * Created by nikhilrajpal on 1/12/19.
  */
 public class EmployeeNode {
 
